@@ -15,7 +15,8 @@
         "nan": "^2.14.2",
         "bigint-buffer": "^1.1.5",
         "blake2": "^4.0.2",
-        "uint64be": "^3.0.0"
+        "uint64be": "^3.0.0",
+        "sha3": "^2.1.4"
     },
     "keywords": [
         "cryptonight",

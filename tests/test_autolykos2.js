@@ -1,5 +1,5 @@
 "use strict";
-const multiHashing = require('cryptonight-hashing');
+const multiHashing = require('../index');
 
 const extraNonce1 = Buffer.from("9618", 'hex');
 const extraNonce2 = Buffer.from("33e73592d373", 'hex');
@@ -21,6 +21,6 @@ if (result !== null && result[0].toString('hex') === '10cf53f111fa6236ab59d87a70
 	console.log('autolykos2 test passed');
 else {
 	console.log('autolykos2 test failed: ' + (result ? result[0].toString('hex') : result[0]));
-        process.exit(1);
+  process.exit(1);
 }
 
