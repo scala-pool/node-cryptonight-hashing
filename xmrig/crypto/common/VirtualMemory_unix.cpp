@@ -27,7 +27,9 @@
 #include <cstdlib>
 #include <sys/mman.h>
 
-
+#if defined __APPLE__ 
+#       define XMRIG_OS_APPLE 1
+#endif
 #ifdef XMRIG_OS_APPLE
 #   include <libkern/OSCacheControl.h>
 #   include <mach/vm_statistics.h>
@@ -145,7 +147,15 @@ void *xmrig::VirtualMemory::allocateExecutableMemory(size_t size, bool hugePages
     void *mem = nullptr;
 
     if (hugePages) {
+
+#   if defined(XMRIG_OS_APPLE)
+        mem = mmap(0, align(size), PROT_READ | PROT_WRITE | SECURE_PROT_EXEC, MAP_PRIVATE | MAP_ANON, VM_FLAGS_SUPERPAGE_SIZE_2MB, 0);
+#   elif defined(__FreeBSD__)
+        mem = mmap(0, align(size), PROT_READ | PROT_WRITE | SECURE_PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS | MAP_ALIGNED_SUPER | MAP_PREFAULT_READ, -1, 0);
+#   else
         mem = mmap(0, align(size), PROT_READ | PROT_WRITE | SECURE_PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS | MAP_POPULATE | hugePagesFlag(hugePageSize()), -1, 0);
+#   endif
+        
     }
 
     if (!mem) {

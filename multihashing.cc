@@ -197,7 +197,7 @@ NAN_METHOD(randomx) {
     info.GetReturnValue().Set(returnValue);
 }
 
-void ghostrider(const unsigned char* data, long unsigned int size, unsigned char* output, cryptonight_ctx** ctx, long unsigned int) {
+void ghostrider(const unsigned char* data, long unsigned int size, unsigned char* output, cryptonight_ctx** ctx, uint64_t h) {
     xmrig::ghostrider::hash(data, size, output, ctx, nullptr);
 }
 
